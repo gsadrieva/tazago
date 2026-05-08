@@ -1,0 +1,52 @@
+
+> tazaqala-mvp@0.1.0 dev
+> next dev --hostname 127.0.0.1 --port 3000
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env.local
+✓ Ready in 626ms
+
+ GET /kk 200 in 2.0s (next.js: 636ms, proxy.ts: 212ms, application-code: 1188ms)
+ GET /kk 200 in 888ms (next.js: 71ms, proxy.ts: 14ms, application-code: 803ms)
+ GET /favicon.ico 404 in 98ms (next.js: 17ms, application-code: 81ms)
+ GET /ru 200 in 564ms (next.js: 12ms, proxy.ts: 8ms, application-code: 544ms)
+ GET /kk 200 in 346ms (next.js: 11ms, proxy.ts: 4ms, application-code: 331ms)
+ GET /ru 200 in 563ms (next.js: 11ms, proxy.ts: 5ms, application-code: 547ms)
+ GET /kk 200 in 526ms (next.js: 11ms, proxy.ts: 4ms, application-code: 511ms)
+ GET /kk 200 in 28ms (next.js: 11ms, proxy.ts: 4ms, application-code: 12ms)
+ GET /kk 200 in 1118ms (next.js: 6ms, proxy.ts: 4ms, application-code: 1108ms)
+ GET /kk/booking 200 in 1029ms (next.js: 993ms, proxy.ts: 5ms, application-code: 31ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fbooking 200 in 1037ms (next.js: 900ms, proxy.ts: 18ms, application-code: 118ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fbooking 200 in 85ms (next.js: 18ms, proxy.ts: 9ms, application-code: 59ms)
+ GET /kk/dashboard 200 in 933ms (next.js: 892ms, proxy.ts: 4ms, application-code: 37ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fdashboard 200 in 126ms (next.js: 22ms, proxy.ts: 7ms, application-code: 97ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fdashboard 200 in 60ms (next.js: 7ms, proxy.ts: 9ms, application-code: 44ms)
+ GET /kk/contact 200 in 809ms (next.js: 761ms, proxy.ts: 4ms, application-code: 43ms)
+ GET /kk/dashboard 200 in 45ms (next.js: 11ms, proxy.ts: 4ms, application-code: 30ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fdashboard 200 in 116ms (next.js: 15ms, proxy.ts: 6ms, application-code: 95ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fdashboard 200 in 58ms (next.js: 7ms, proxy.ts: 7ms, application-code: 45ms)
+ GET /kk/booking 200 in 46ms (next.js: 13ms, proxy.ts: 4ms, application-code: 29ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fbooking 200 in 143ms (next.js: 15ms, proxy.ts: 7ms, application-code: 121ms)
+ GET /kk/auth/sign-in?next=%2Fkk%2Fbooking 200 in 60ms (next.js: 10ms, proxy.ts: 7ms, application-code: 43ms)
+ GET /kk/services 200 in 1366ms (next.js: 795ms, proxy.ts: 4ms, application-code: 567ms)
+ GET /kk/services 200 in 435ms (next.js: 24ms, proxy.ts: 7ms, application-code: 403ms)
+ GET /kk/services 200 in 594ms (next.js: 10ms, proxy.ts: 3ms, application-code: 580ms)
+ GET /kk 200 in 423ms (next.js: 12ms, proxy.ts: 3ms, application-code: 408ms)
+ GET /ru 200 in 605ms (next.js: 10ms, proxy.ts: 3ms, application-code: 591ms)
+ GET /ru/services 200 in 343ms (next.js: 10ms, proxy.ts: 4ms, application-code: 329ms)
+ GET /ru 200 in 511ms (next.js: 12ms, proxy.ts: 5ms, application-code: 494ms)
+ GET /ru/services 200 in 346ms (next.js: 10ms, proxy.ts: 4ms, application-code: 331ms)
+ GET /ru 200 in 513ms (next.js: 10ms, proxy.ts: 3ms, application-code: 500ms)
+ GET /kk 200 in 332ms (next.js: 11ms, proxy.ts: 3ms, application-code: 317ms)
+✓ Compiled in 216ms
+ GET /kk 200 in 181ms (next.js: 39ms, proxy.ts: 12ms, application-code: 130ms)
+ GET /kk 200 in 589ms (next.js: 5ms, proxy.ts: 5ms, application-code: 579ms)
+ GET /kk 200 in 961ms (next.js: 9ms, proxy.ts: 6ms, application-code: 946ms)
+ GET /kk 200 in 1324ms (next.js: 175ms, proxy.ts: 13ms, application-code: 1136ms)
+✓ Compiled in 55ms
+✓ Compiled in 359ms
+✓ Compiled in 42ms
+✓ Compiled in 54ms
+✓ Compiled in 59ms

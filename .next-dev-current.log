@@ -1,0 +1,24 @@
+
+> tazaqala-mvp@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://26.53.4.106:3000
+- Environments: .env.local
+✓ Ready in 874ms
+
+ GET / 307 in 3.1s (next.js: 2.6s, proxy.ts: 273ms, application-code: 164ms)
+ GET /kk 200 in 3.6s (next.js: 1267ms, proxy.ts: 6ms, application-code: 2.3s)
+ GET / 307 in 1087ms (next.js: 46ms, proxy.ts: 107ms, application-code: 934ms)
+ GET /kk 200 in 1862ms (next.js: 336ms, proxy.ts: 28ms, application-code: 1498ms)
+ GET / 307 in 519ms (next.js: 25ms, proxy.ts: 40ms, application-code: 453ms)
+ GET /kk 200 in 3.8s (next.js: 159ms, proxy.ts: 57ms, application-code: 3.6s)
+ GET /kk 200 in 44ms (next.js: 20ms, proxy.ts: 10ms, application-code: 14ms)
+ GET /kk 200 in 533ms (next.js: 7ms, proxy.ts: 7ms, application-code: 519ms)
+ GET /kk/services 200 in 2.2s (next.js: 1751ms, proxy.ts: 7ms, application-code: 435ms)
+ GET /kk/auth/sign-in 200 in 1682ms (next.js: 1359ms, proxy.ts: 6ms, application-code: 317ms)
+ GET /kk/auth/sign-in?error=invalid_credentials&next=%2Fkk%2Fdashboard 200 in 92ms (next.js: 15ms, proxy.ts: 7ms, application-code: 70ms)
+ POST /kk/auth/sign-in 303 in 780ms (next.js: 13ms, proxy.ts: 6ms, application-code: 761ms)
+  └─ ƒ signInAction({}) in 644ms lib/actions/auth.ts
+ GET /kk/services 200 in 691ms (next.js: 20ms, proxy.ts: 7ms, application-code: 664ms)
