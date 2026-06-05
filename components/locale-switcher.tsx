@@ -19,6 +19,8 @@ export function LocaleSwitcher({ currentLocale, pathname }: LocaleSwitcherProps)
           <Link
             key={locale}
             href={href}
+            prefetch={true}
+            scroll={false}
             className={[
               "rounded-full px-3 py-1.5 text-xs font-bold transition",
               active

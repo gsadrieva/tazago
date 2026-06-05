@@ -90,40 +90,14 @@ export async function getAdminBookings(
   filters: { q?: string; status?: string; paymentStatus?: string; service?: string }
 ): Promise<BookingDetail[]> {
   const supabase = await createClient();
+
   let query = supabase
     .from("bookings")
-    .select(
-      `
-      id,
-      booking_number,
-      customer_name,
-      customer_phone,
-      customer_email,
-      district,
-      address_line,
-      scheduled_date,
-      time_window,
-      total_kzt,
-      status,
-      payment_status,
-      comment,
-      created_at,
-      services!inner(
-        id,
-        slug,
-        service_translations!inner(locale, title)
-      ),
-      booking_status_events(
-        id,
-        event_type,
-        from_status,
-        to_status,
-        note,
-        created_at
-      )
-    `
-    )
-    .eq("services.service_translations.locale", locale)
+    .select(`
+      id, booking_number, customer_name, customer_phone, customer_email,
+      district, address_line, scheduled_date, time_window, total_kzt,
+      status, payment_status, comment, created_at, service_id
+    `)
     .order("created_at", { ascending: false });
 
   if (filters.status) query = query.eq("status", filters.status);
@@ -136,11 +110,36 @@ export async function getAdminBookings(
   }
 
   const { data, error } = await query;
-  if (error) {
-    throw new Error(error.message);
+  if (error) throw new Error(error.message);
+
+  const bookings = data ?? [];
+  if (bookings.length === 0) return [];
+
+  const serviceIds = [...new Set(bookings.map((b: any) => b.service_id))];
+  const { data: translations } = await supabase
+    .from("service_translations")
+    .select("service_id, title")
+    .in("service_id", serviceIds)
+    .eq("locale", locale);
+
+  const titleMap = Object.fromEntries(
+    (translations ?? []).map((t: any) => [t.service_id, t.title])
+  );
+
+  const bookingIds = bookings.map((b: any) => b.id);
+  const { data: events } = await supabase
+    .from("booking_status_events")
+    .select("id, booking_id, event_type, from_status, to_status, note, created_at")
+    .in("booking_id", bookingIds)
+    .order("created_at", { ascending: false });
+
+  const eventsMap: Record<string, any[]> = {};
+  for (const e of events ?? []) {
+    if (!eventsMap[e.booking_id]) eventsMap[e.booking_id] = [];
+    eventsMap[e.booking_id].push(e);
   }
 
-  return (data ?? []).map((booking: any) => ({
+  return bookings.map((booking: any) => ({
     id: booking.id,
     bookingNumber: booking.booking_number,
     customerName: booking.customer_name,
@@ -155,10 +154,8 @@ export async function getAdminBookings(
     paymentStatus: booking.payment_status,
     comment: booking.comment,
     createdAt: booking.created_at,
-    serviceId: booking.services?.id ?? "",
-    serviceTitle: booking.services?.service_translations?.[0]?.title ?? booking.services?.slug ?? "",
-    events: (booking.booking_status_events ?? []).sort(
-      (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    ),
+    serviceId: booking.service_id ?? "",
+    serviceTitle: titleMap[booking.service_id] ?? "",
+    events: eventsMap[booking.id] ?? [],
   })) as BookingDetail[];
 }
