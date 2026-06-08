@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "auto";
 
 export async function generateMetadata({
   params,

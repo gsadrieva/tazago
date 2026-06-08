@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kk">
+    <html lang="ru" suppressHydrationWarning>
       <body className={`${inter.variable} ${manrope.variable}`}>{children}</body>
     </html>
   );

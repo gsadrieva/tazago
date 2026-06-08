@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { SiteShell } from "@/components/site-shell";
-import { getSessionContext } from "@/lib/auth";
+import { PublicSiteShell } from "@/components/public-shell";
 import { formatPrice, formatPriceFrom } from "@/lib/format";
 import { getCategoryLabel, getDictionary, getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 import { getCatalogServiceBySlug } from "@/lib/queries/catalog";
+
+export const revalidate = 60;
 
 export default async function ServiceDetailsPage({
   params,
@@ -16,7 +17,6 @@ export default async function ServiceDetailsPage({
   const { locale: rawLocale, slug } = await params;
   const locale = resolveLocale(rawLocale);
   const dict = getDictionary(locale);
-  const { user, profile } = await getSessionContext();
   const service = await getCatalogServiceBySlug(locale, slug);
 
   if (!service) {
@@ -24,12 +24,7 @@ export default async function ServiceDetailsPage({
   }
 
   return (
-    <SiteShell
-      locale={locale}
-      pathname={`/${locale}/services/${slug}`}
-      isAuthenticated={Boolean(user)}
-      role={profile?.role}
-    >
+    <PublicSiteShell locale={locale} pathname={`/${locale}/services/${slug}`}>
       <main className="section-shell py-16">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <img
@@ -108,6 +103,6 @@ export default async function ServiceDetailsPage({
           </div>
         </div>
       </main>
-    </SiteShell>
+    </PublicSiteShell>
   );
 }

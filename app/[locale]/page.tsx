@@ -3,12 +3,13 @@ import { ArrowRight, Clock3, MapPin, PhoneCall, ShieldCheck, Sparkles } from "lu
 
 import { ChatWidget } from "@/components/home/chat-widget";
 import { TestimonialsCarousel } from "@/components/home/testimonials-carousel";
-import { SiteShell } from "@/components/site-shell";
-import { getSessionContext } from "@/lib/auth";
+import { PublicSiteShell } from "@/components/public-shell";
 import { formatPriceFrom } from "@/lib/format";
 import { getDictionary, getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 import { getCatalogServices } from "@/lib/queries/catalog";
+
+export const revalidate = 60;
 
 function trimTrailingDots(text: string) {
   return text.replace(/[.]+$/u, "");
@@ -22,17 +23,11 @@ export default async function LocalizedHomePage({
   const { locale: rawLocale } = await params;
   const locale = resolveLocale(rawLocale);
   const dict = getDictionary(locale);
-  const { user, profile } = await getSessionContext();
   const allServices = await getCatalogServices(locale);
   const services = allServices.slice(0, 4);
 
   return (
-    <SiteShell
-      locale={locale}
-      pathname={`/${locale}`}
-      isAuthenticated={Boolean(user)}
-      role={profile?.role}
-    >
+    <PublicSiteShell locale={locale} pathname={`/${locale}`}>
       <main className="pb-24">
         <section className="section-shell grid gap-12 px-6 py-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:py-24">
           <div className="relative">
@@ -235,11 +230,11 @@ export default async function LocalizedHomePage({
       <ChatWidget
         locale={locale}
         services={allServices}
-        isAuthenticated={Boolean(user)}
+        isAuthenticated={false}
         bookingUrl={getLocaleHref(locale, "/booking")}
         signUpUrl={getLocaleHref(locale, "/auth/sign-up")}
         signInUrl={getLocaleHref(locale, "/auth/sign-in")}
       />
-    </SiteShell>
+    </PublicSiteShell>
   );
 }

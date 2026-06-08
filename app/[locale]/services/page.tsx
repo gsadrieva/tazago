@@ -1,11 +1,12 @@
 import Link from "next/link";
 
-import { SiteShell } from "@/components/site-shell";
-import { getSessionContext } from "@/lib/auth";
+import { PublicSiteShell } from "@/components/public-shell";
 import { formatPrice, formatPriceFrom } from "@/lib/format";
 import { getDictionary, getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 import { getCatalogServices } from "@/lib/queries/catalog";
+
+export const revalidate = 60;
 
 export default async function ServicesPage({
   params,
@@ -15,16 +16,10 @@ export default async function ServicesPage({
   const { locale: rawLocale } = await params;
   const locale = resolveLocale(rawLocale);
   const dict = getDictionary(locale);
-  const { user, profile } = await getSessionContext();
   const services = await getCatalogServices(locale);
 
   return (
-    <SiteShell
-      locale={locale}
-      pathname={`/${locale}/services`}
-      isAuthenticated={Boolean(user)}
-      role={profile?.role}
-    >
+    <PublicSiteShell locale={locale} pathname={`/${locale}/services`}>
       <main className="section-shell py-16">
         <div className="max-w-3xl">
           <h1 className="font-[family-name:var(--font-manrope)] text-5xl font-extrabold tracking-tight">
@@ -120,6 +115,6 @@ export default async function ServicesPage({
           ))}
         </div>
       </main>
-    </SiteShell>
+    </PublicSiteShell>
   );
 }
