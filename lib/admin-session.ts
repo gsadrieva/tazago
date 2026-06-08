@@ -3,32 +3,27 @@ import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 
 const ADMIN_SESSION_COOKIE = "tazago_admin_session";
-const DEFAULT_ADMIN_LOGIN = "admin";
-const DEFAULT_ADMIN_PASSWORD = "TazaGoAdmin2026!";
-const DEFAULT_ADMIN_SESSION_SECRET = "tazago-admin-session-2026";
 
 function getAdminCredentials() {
-  const login = process.env.ADMIN_LOGIN?.trim() || DEFAULT_ADMIN_LOGIN;
-  const password = process.env.ADMIN_PASSWORD?.trim() || DEFAULT_ADMIN_PASSWORD;
+  const login = process.env.ADMIN_LOGIN?.trim();
+  const password = process.env.ADMIN_PASSWORD?.trim();
+  const secret = process.env.ADMIN_SESSION_SECRET?.trim();
 
   return {
     login,
     password,
-    configured: Boolean(login && password),
+    secret,
+    configured: Boolean(login && password && secret),
   };
 }
 
 function getAdminSessionToken() {
-  const { login, password, configured } = getAdminCredentials();
+  const { login, password, secret, configured } = getAdminCredentials();
 
   if (!configured) {
     return null;
   }
 
-  const secret =
-    process.env.ADMIN_SESSION_SECRET?.trim() ||
-    DEFAULT_ADMIN_SESSION_SECRET ||
-    `${login}:${password}:tazago-admin`;
   return createHash("sha256").update(`${login}:${password}:${secret}`).digest("hex");
 }
 
