@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 import { BookingWizard } from "@/components/booking/booking-wizard";
 import { SiteShell } from "@/components/site-shell";
 import { requireUser } from "@/lib/auth";

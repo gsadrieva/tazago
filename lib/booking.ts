@@ -17,7 +17,7 @@ export const bookingPayloadSchema = z.object({
   customerName: trimmed(z.string().min(2)),
   customerPhone: trimmed(z.string().min(8)),
   customerEmail: trimmed(z.string()).optional().default("").refine(
-    (value) => value === "" || z.email().safeParse(value).success,
+    (value) => value === "" || z.string().email().safeParse(value).success,
     "invalid_email"
   ),
   city: trimmed(z.string().min(2)),

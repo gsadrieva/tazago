@@ -8,7 +8,13 @@ import type { AppProfile, Locale } from "@/types/app";
 export async function getSessionContext() {
   noStore();
 
-  const supabase = await createClient();
+  let supabase;
+  try {
+    supabase = await createClient();
+  } catch {
+    return { user: null, profile: null as AppProfile | null };
+  }
+
   let user = null;
 
   try {

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type { BookingDetail, BookingListItem, Locale } from "@/types/app";
 
 export async function getUserBookings(locale: Locale, userId: string): Promise<BookingListItem[]> {
@@ -87,9 +88,10 @@ export async function getUserBookings(locale: Locale, userId: string): Promise<B
 
 export async function getAdminBookings(
   locale: Locale,
-  filters: { q?: string; status?: string; paymentStatus?: string; service?: string }
+  filters: { q?: string; status?: string; paymentStatus?: string; service?: string },
+  useServiceRole = false
 ): Promise<BookingDetail[]> {
-  const supabase = await createClient();
+  const supabase = useServiceRole ? createAdminClient() : await createClient();
 
   let query = supabase
     .from("bookings")
@@ -104,8 +106,9 @@ export async function getAdminBookings(
   if (filters.paymentStatus) query = query.eq("payment_status", filters.paymentStatus);
   if (filters.service) query = query.eq("service_id", filters.service);
   if (filters.q) {
+    const safeQ = filters.q.replace(/%/g, "\\%").replace(/_/g, "\\_");
     query = query.or(
-      `booking_number.ilike.%${filters.q}%,customer_name.ilike.%${filters.q}%,customer_phone.ilike.%${filters.q}%`
+      `booking_number.ilike.%${safeQ}%,customer_name.ilike.%${safeQ}%,customer_phone.ilike.%${safeQ}%`
     );
   }
 

@@ -8,6 +8,8 @@ import { getDictionary, getEventLabel, getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 import { getUserBookings } from "@/lib/queries/bookings";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage({
   params,
 }: {

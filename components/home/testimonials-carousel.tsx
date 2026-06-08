@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { useEffect, useEffectEvent, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Testimonial = {
   name: string;
@@ -17,9 +17,12 @@ type TestimonialsCarouselProps = {
 export function TestimonialsCarousel({ items, title }: TestimonialsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const goNext = useEffectEvent(() => {
-    setCurrentIndex((value) => (value + 1) % items.length);
-  });
+  const itemsLengthRef = useRef(items.length);
+  itemsLengthRef.current = items.length;
+
+  const goNext = useCallback(() => {
+    setCurrentIndex((value) => (value + 1) % itemsLengthRef.current);
+  }, []);
 
   useEffect(() => {
     if (items.length < 2) return;

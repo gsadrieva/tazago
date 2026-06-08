@@ -1,15 +1,12 @@
-import { createHash } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 
 import { cookies } from "next/headers";
 
 const ADMIN_SESSION_COOKIE = "tazago_admin_session";
-const DEFAULT_ADMIN_LOGIN = "admin";
-const DEFAULT_ADMIN_PASSWORD = "TazaGoAdmin2026!";
-const DEFAULT_ADMIN_SESSION_SECRET = "tazago-admin-session-2026";
 
 function getAdminCredentials() {
-  const login = process.env.ADMIN_LOGIN?.trim() || DEFAULT_ADMIN_LOGIN;
-  const password = process.env.ADMIN_PASSWORD?.trim() || DEFAULT_ADMIN_PASSWORD;
+  const login = process.env.ADMIN_LOGIN?.trim() ?? "";
+  const password = process.env.ADMIN_PASSWORD?.trim() ?? "";
 
   return {
     login,
@@ -25,15 +22,19 @@ function getAdminSessionToken() {
     return null;
   }
 
-  const secret =
-    process.env.ADMIN_SESSION_SECRET?.trim() ||
-    DEFAULT_ADMIN_SESSION_SECRET ||
-    `${login}:${password}:tazago-admin`;
+  const secret = process.env.ADMIN_SESSION_SECRET?.trim() || `${login}:${password}:tazago-admin`;
   return createHash("sha256").update(`${login}:${password}:${secret}`).digest("hex");
 }
 
 export function isAdminCredentialsConfigured() {
   return getAdminCredentials().configured;
+}
+
+function safeEqual(a: string, b: string) {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
 }
 
 export function isValidAdminCredentials(login: string, password: string) {
@@ -43,7 +44,7 @@ export function isValidAdminCredentials(login: string, password: string) {
     return false;
   }
 
-  return login === credentials.login && password === credentials.password;
+  return safeEqual(login, credentials.login) && safeEqual(password, credentials.password);
 }
 
 export async function isAdminSessionActive() {

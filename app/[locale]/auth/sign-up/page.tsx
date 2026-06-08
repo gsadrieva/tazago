@@ -7,6 +7,8 @@ import { signUpAction } from "@/lib/actions/auth";
 import { getDictionary, getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 
+export const dynamic = "force-dynamic";
+
 export default async function SignUpPage({
   params,
   searchParams,

@@ -3,6 +3,8 @@ import {
   updateBookingPaymentAction,
   updateBookingStatusAction,
 } from "@/lib/actions/admin";
+
+export const dynamic = "force-dynamic";
 import { SiteShell } from "@/components/site-shell";
 import { BookingStatusBadge, PaymentStatusBadge } from "@/components/ui/status-badge";
 import { requireAdmin } from "@/lib/auth";
@@ -57,9 +59,9 @@ export default async function AdminPage({
   const { locale: rawLocale } = await params;
   const locale = resolveLocale(rawLocale);
   const dict = getDictionary(locale);
-  const { user, profile } = await requireAdmin(locale);
+  const { user, profile, adminSession } = await requireAdmin(locale);
   const filters = await searchParams;
-  const bookings = await getAdminBookings(locale, filters);
+  const bookings = await getAdminBookings(locale, filters, adminSession);
   const services = await getCatalogServices(locale);
   const serviceFormCopy =
     locale === "kk"

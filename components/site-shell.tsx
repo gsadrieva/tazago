@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { LocaleSwitcher } from "@/components/locale-switcher";
@@ -41,10 +42,12 @@ export async function SiteShell({
       <header className="sticky top-0 z-50 border-b border-white/40 bg-white/75 backdrop-blur-2xl">
         <div className="section-shell flex flex-wrap items-center justify-between gap-4 py-4">
           <Link href={getLocaleHref(locale)} prefetch={false} className="flex items-center gap-3">
-            <img
+            <Image
               src="/tazago-logo-badge.svg"
               alt="TazaGo logo"
-              className="h-11 w-11 rounded-full object-cover shadow-[0_20px_40px_rgba(79,98,107,0.12)]"
+              width={44}
+              height={44}
+              className="rounded-full object-cover shadow-[0_20px_40px_rgba(79,98,107,0.12)]"
             />
             <div>
               <div className="font-[family-name:var(--font-manrope)] text-lg font-extrabold tracking-tight text-[var(--color-primary)]">

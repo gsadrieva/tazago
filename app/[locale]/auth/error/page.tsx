@@ -2,6 +2,8 @@ import { SiteShell } from "@/components/site-shell";
 import { getDictionary, getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 
+export const dynamic = "force-dynamic";
+
 export default async function AuthErrorPage({
   params,
 }: {

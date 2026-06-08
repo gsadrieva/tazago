@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 import { SiteShell } from "@/components/site-shell";
-import { getSessionContext } from "@/lib/auth";
 import { adminSignInAction } from "@/lib/actions/admin-auth";
-import { isAdminSessionActive } from "@/lib/admin-session";
 import { getLocaleHref } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale";
 
@@ -18,12 +17,6 @@ export default async function AdminLoginPage({
   const { locale: rawLocale } = await params;
   const locale = resolveLocale(rawLocale);
   const query = await searchParams;
-  const { user, profile } = await getSessionContext();
-  const adminSession = await isAdminSessionActive();
-
-  if (adminSession || profile?.role === "admin") {
-    redirect(`/${locale}/admin`);
-  }
 
   const copy =
     locale === "kk"
@@ -63,8 +56,8 @@ export default async function AdminLoginPage({
     <SiteShell
       locale={locale}
       pathname={`/${locale}/admin/login`}
-      isAuthenticated={Boolean(user)}
-      role={profile?.role}
+      isAuthenticated={false}
+      role={null}
     >
       <main className="section-shell py-16">
         <div className="mx-auto max-w-xl surface-card p-8">

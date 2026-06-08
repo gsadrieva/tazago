@@ -21,6 +21,7 @@ type FormState = {
   customerName: string;
   customerPhone: string;
   customerEmail: string;
+  city: string;
   district: string;
   addressLine: string;
   apartmentDetails: string;
@@ -53,6 +54,7 @@ export function BookingWizard({
     customerName: initialName ?? "",
     customerPhone: initialPhone ?? "",
     customerEmail: initialEmail ?? "",
+    city: dict.brand.city,
     district: dict.booking.districts[0] ?? "",
     addressLine: "",
     apartmentDetails: "",
@@ -147,7 +149,7 @@ export function BookingWizard({
         customerName: normalizeText(form.customerName),
         customerPhone: normalizeText(form.customerPhone),
         customerEmail: normalizeText(form.customerEmail),
-        city: "Алматы",
+        city: form.city,
         district: normalizeText(form.district),
         addressLine: normalizeText(form.addressLine),
         apartmentDetails: normalizeText(form.apartmentDetails),

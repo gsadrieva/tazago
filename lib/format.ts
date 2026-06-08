@@ -2,11 +2,11 @@ import { localeToIntl } from "@/lib/locale";
 import type { Locale } from "@/types/app";
 
 export function formatPrice(value: number, locale: Locale) {
-  return new Intl.NumberFormat(localeToIntl(locale), {
-    style: "currency",
-    currency: "KZT",
-    maximumFractionDigits: 0
+  const formatted = new Intl.NumberFormat(localeToIntl(locale), {
+    maximumFractionDigits: 0,
   }).format(value);
+
+  return `${formatted} ₸`;
 }
 
 export function formatPriceFrom(value: number, locale: Locale) {
